@@ -1,70 +1,42 @@
-# Getting Started with Create React App
+# 날씨앱 포트폴리오
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- https://openweathermap.org/
+- 현재 온도/습도, 날씨, 상세 날씨설명, 바람, 나라, 도시 이름, 구름, 체감온도, 최저온도, 최고온도,
 
-## Available Scripts
+## [개발 기획]
 
-In the project directory, you can run:
+1. 제작의도, 서비스 목표
 
-### `npm start`
+   - 날씨앱을 깔끔한 UI로 제작
+   - 다양한 아이콘으로 시각효과
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+2. 클라이언트 요구 분석
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+   - 깔끔하고 한눈에 알아보기 쉬운 디자인
+   - 정확한 정보 전달
 
-### `npm test`
+3. 사이트맵 구현
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+   - 일러스트로 정리
 
-### `npm run build`
+4. 스택(Stack)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+   - html, css, js, node, js, react
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+5. 디자인
+   - 메인, 서브 폰트 및 색상 인터렉션
+   - 메인 페이지 디자인
+   - 서브페이지 디자인
+   - 404 디자인
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## [계획서 작성]
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- [ x ] 12/08(금) > 프로젝트 찾기
+- [ x ] 12/09(토) > 개발기획, 제작 의도
+- [ x ] 12/10(일) > 디자인 및 UI 리서치
+- [] 12/11(월) > 메인페이지 및, 서브페이지 디자인 구성
+- [] 12/12(화) > 디자인 피드백, 개발 & 깃 시작 & api 구성
+- [] 12/13(수) > 메인페이지 구성
+- [] 12/14(목) > 404페이지 설정 및 디자인 / 반응형
+- [] 12/15(금) > 배포 및 테스트
+- [] 12/18(월) > 컨펌 및 종료
