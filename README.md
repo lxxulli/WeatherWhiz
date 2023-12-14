@@ -36,10 +36,12 @@
 - [ x ] 12/09(토) > 개발기획, 제작 의도
 - [ x ] 12/10(일) > 디자인 및 UI 리서치
 - [ x ] 12/11(월) > 메인페이지 및, 서브페이지 디자인 구성
-- [] 12/12(화) > 디자인 피드백, 개발 & 깃 시작 & api 구성
-- [] 12/13(수) > 메인페이지 구성
-- [] 12/14(목) > 404페이지 설정 및 디자인 / 반응형
-- [] 12/15(금) > 배포 및 테스트
+- [ x ] 12/12(화) > 디자인 피드백, 개발 & 깃 시작 & api 구성
+- [ x ] 12/13(수) > 메인페이지 구성 / api 구성
+- [] 12/14(목) > 메인페이지 구성 / api 구성
+- [] 12/15(금) > 404페이지 설정 및 디자인 / 반응형
+- [] 12/16(토) > 오류 수정
+- [] 12/17(일) > 배포 및 테스트
 - [] 12/18(월) > 컨펌 및 종료
 
 ## [설치 항목]
@@ -49,6 +51,7 @@
 - [x] styled-components
   - npm i styled-components
 - [x] font-awesome
+  - npm i @fortawesome/react-fontawesome
   - npm i --save @fortawesome/fontawesome-svg-core
   - npm i --save @fortawesome/free-solid-svg-icons
   - npm i --save @fortawesome/free-regular-svg-icons
