@@ -6,7 +6,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { weatherApi } from "../api";
+import { imgIcon, weatherApi } from "../api";
 
 const Wrap = styled.div`
   height: 100vh;
@@ -74,11 +74,14 @@ const SubScreen = styled.div``;
 
 export const Home = () => {
   const [weatherData, setWeatherData] = useState();
+  const [iconData, setIconData] = useState();
 
   useEffect(() => {
     (async () => {
       const data = await weatherApi();
       setWeatherData(data);
+      const result = await imgIcon();
+      console.log(data);
     })();
   }, []);
 
@@ -92,7 +95,7 @@ export const Home = () => {
             </SearchIcon>
             <Input />
           </Form>
-          <WeatherIcon>{weatherData?.weather[0]?.icon}</WeatherIcon>
+          <WeatherIcon>{}</WeatherIcon>
           <Location></Location>
           <CurrentTemp></CurrentTemp>
           <TimeWrap>
