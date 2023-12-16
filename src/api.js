@@ -10,8 +10,7 @@ const getWeather =
 
 export const weatherApi = () => fetch(getWeather).then((res) => res.json());
 
-export const imgIcon = () => {
-  const icon = baseURL.data.weather[0].icon;
+export const imgIcon = (icon) => {
   const iconURL = `http://openweathermap.org/img/wn/${icon}@2x.png`;
   return fetch(iconURL).then((res) => res.json());
 };
