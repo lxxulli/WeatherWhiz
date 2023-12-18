@@ -9,6 +9,7 @@ import styled from "styled-components";
 import { imgIcon, weatherApi } from "../api";
 import { Loading } from "../components/Loading";
 import { mainColors } from "../style/GlobalStyle";
+import { faClock } from "@fortawesome/free-regular-svg-icons";
 
 const Wrap = styled.div`
   height: 100vh;
@@ -96,6 +97,13 @@ const ConWrap = styled.ul`
     flex-direction: column;
   }
 `;
+const Con = styled.div`
+  width: 100%;
+  height: 170px;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.5);
+`;
 const Text = styled.div`
   display: flex;
   justify-content: space-between;
@@ -143,7 +151,7 @@ export const Home = () => {
 
   return (
     <>
-      {!isloading ? (
+      {isloading ? (
         <Loading />
       ) : (
         <Wrap>
@@ -194,7 +202,14 @@ export const Home = () => {
                 </li>
               </ConWrap>
               <ConWrap>
-                <li></li>
+                <Con>
+                  <Text>
+                    <h4>시간별 기온</h4>
+                    <HumIcon>
+                      <FontAwesomeIcon icon={faClock} />
+                    </HumIcon>
+                  </Text>
+                </Con>
               </ConWrap>
             </MainScreen>
 
