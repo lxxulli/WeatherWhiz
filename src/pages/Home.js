@@ -1,15 +1,20 @@
 import {
   faDroplet,
   faMagnifyingGlass,
+  faMoon,
   faTemperatureHigh,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { imgIcon, weatherApi } from "../api";
+import { weatherApi, forecastData } from "../api";
 import { Loading } from "../components/Loading";
 import { mainColors } from "../style/GlobalStyle";
-import { faClock } from "@fortawesome/free-regular-svg-icons";
+import {
+  faCalendarCheck,
+  faCalendarDays,
+  faClock,
+} from "@fortawesome/free-regular-svg-icons";
 
 const Wrap = styled.div`
   height: 100vh;
@@ -37,16 +42,17 @@ const Container = styled.div`
 const MainScreen = styled.div`
   width: 30%;
   background-color: rgba(255, 255, 255, 0.4);
-  border-radius: 50px;
   padding: 30px;
+  border-radius: 50px 0 0 50px;
 `;
 const Form = styled.form`
   height: 50px;
   display: flex;
   align-items: center;
   background-color: rgba(255, 255, 255, 0.7);
-  border-radius: 50px;
+  border-radius: 30px;
   font-size: 25px;
+  box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.05);
 `;
 const SearchIcon = styled.div`
   margin-left: 30px;
@@ -57,17 +63,19 @@ const Input = styled.input`
   height: 100%;
   margin-left: 20px;
 `;
-const TopWrap = styled.div`
+const MainTxtWrap = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
   font-size: 18px;
   font-weight: 300;
+  margin-bottom: 30px;
 `;
 const WeatherIcon = styled.div`
-  background-color: lightgray;
   margin: 20px 0;
-  padding: 100px;
+  img {
+    width: 240px;
+  }
 `;
 const Location = styled.h4``;
 const CurrentTemp = styled.h2`
@@ -85,10 +93,10 @@ const Hour = styled.h4``;
 const ConWrap = styled.ul`
   display: flex;
   justify-content: space-between;
-  margin: 20px 0;
+  margin-bottom: 20px;
   li {
     width: 47%;
-    height: 170px;
+    height: 185px;
     padding: 15px;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.5);
@@ -99,7 +107,7 @@ const ConWrap = styled.ul`
 `;
 const Con = styled.div`
   width: 100%;
-  height: 170px;
+  height: 185px;
   padding: 15px;
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.5);
@@ -118,29 +126,97 @@ const Res = styled.h3`
   color: ${mainColors.blackColor};
 `;
 const HumIcon = styled.div``;
-const SubScreen = styled.div``;
+// main Screen
+
+const SubScreen = styled.div`
+  width: 70%;
+  padding: 30px;
+  position: relative;
+`;
+const ModeSwitch = styled.div`
+  width: 100px;
+  height: 50px;
+  display: block;
+  position: absolute;
+  right: 3%;
+  border-radius: 30px;
+  background-color: #fff;
+  box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  font-size: 20px;
+`;
+const Btnicon = styled.div`
+  position: absolute;
+  top: 50%;
+  right: 17px;
+  transform: translateY(-50%);
+  color: #ffef92;
+  font-size: 20px;
+`;
+const ToggleBtn = styled.div`
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background-color: #e0e0e0;
+`;
+const Top = styled.div``;
+const DayWeather = styled.div`
+  width: 100%;
+  margin-top: 15px;
+`;
+const Title = styled.div`
+  display: flex;
+  font-size: 20px;
+  h4 {
+    margin-left: 10px;
+  }
+`;
+const BoxWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 0;
+`;
+const Box = styled.div`
+  width: 19%;
+  height: 250px;
+  border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const Bottom = styled.div``;
+const TodayWrap = styled.div``;
 
 export const Home = () => {
   const [weatherData, setWeatherData] = useState();
-  const [iconData, setIconData] = useState();
   const [isloading, setIsloading] = useState(true);
   const [dayData, setDayData] = useState();
   const [timeData, setTimeData] = useState();
+  const [fcData, setFcData] = useState();
 
   const now = new Date();
   const day = String(now.getDay());
   const week = ["일", "월", "화", "수", "목", "금", "토"];
   const dayResult = week[day];
   const hours = String(now.getHours());
-
   useEffect(() => {
     (async () => {
       const data = await weatherApi();
       setWeatherData(data);
       setDayData(`${dayResult}요일`);
       setTimeData(`${hours}:00`);
+      const res = await forecastData();
+      console.log(res);
+
       setIsloading(false);
-      console.log(data);
     })();
   }, [hours, dayResult]);
 
@@ -163,8 +239,13 @@ export const Home = () => {
                 </SearchIcon>
                 <Input />
               </Form>
-              <TopWrap>
-                <WeatherIcon>{icon}</WeatherIcon>
+              <MainTxtWrap>
+                <WeatherIcon>
+                  <img
+                    src={`http://openweathermap.org/img/wn/${icon}@2x.png`}
+                    alt=""
+                  />
+                </WeatherIcon>
                 <Location>부산광역시</Location>
                 <CurrentTemp>
                   {Math.round(weatherData?.main?.temp)}º
@@ -173,7 +254,7 @@ export const Home = () => {
                   <Day>{dayData},</Day>
                   <Hour>{timeData}</Hour>
                 </TimeWrap>
-              </TopWrap>
+              </MainTxtWrap>
               <ConWrap>
                 <li>
                   <Text>
@@ -213,7 +294,69 @@ export const Home = () => {
               </ConWrap>
             </MainScreen>
 
-            <SubScreen></SubScreen>
+            <SubScreen>
+              <ModeSwitch>
+                <ToggleBtn></ToggleBtn>
+                <Btnicon>
+                  <FontAwesomeIcon icon={faMoon} />
+                </Btnicon>
+              </ModeSwitch>
+              <Top>
+                <DayWeather>
+                  <Title>
+                    <FontAwesomeIcon icon={faCalendarDays} />
+                    <h4>5일간 일기예보</h4>
+                  </Title>
+                  <BoxWrap>
+                    <Box>
+                      <li>day</li>
+                      <li>이미지</li>
+                      <li>최고</li>
+                      <li>최저</li>
+                    </Box>
+                    <Box>
+                      <li>day</li>
+                      <li>이미지</li>
+                      <li>최고</li>
+                      <li>최저</li>
+                    </Box>
+                    <Box>
+                      <li>day</li>
+                      <li>이미지</li>
+                      <li>최고</li>
+                      <li>최저</li>
+                    </Box>
+                    <Box>
+                      <li>day</li>
+                      <li>이미지</li>
+                      <li>최고</li>
+                      <li>최저</li>
+                    </Box>
+                    <Box>
+                      <li>day</li>
+                      <li>이미지</li>
+                      <li>최고</li>
+                      <li>최저</li>
+                    </Box>
+                  </BoxWrap>
+                </DayWeather>
+              </Top>
+              <Bottom>
+                <Title>
+                  <FontAwesomeIcon icon={faCalendarCheck} />
+                  <h4>오늘의 날씨 정보</h4>
+                </Title>
+                <TodayWrap>
+                  <li>강수량</li>
+                  <li>기압</li>
+                  <li>가시성</li>
+                  <li>바람</li>
+                  <li>흐림</li>
+                  <li>일출</li>
+                  <li>대기오염</li>
+                </TodayWrap>
+              </Bottom>
+            </SubScreen>
           </Container>
         </Wrap>
       )}
