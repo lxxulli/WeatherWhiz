@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { imgIcon, weatherApi } from "../api";
 import { Loading } from "../components/Loading";
+import { mainColors } from "../style/GlobalStyle";
 
 const Wrap = styled.div`
   height: 100vh;
@@ -24,7 +25,7 @@ const Wrap = styled.div`
 const Container = styled.div`
   max-width: 80%;
   width: 100%;
-  height: 80%;
+  height: 85%;
   background: rgba(255, 255, 255, 0.15);
   box-shadow: 0 3px 32px 0 rgba(31, 38, 135, 0.15);
   backdrop-filter: blur(8px);
@@ -83,25 +84,32 @@ const Hour = styled.h4``;
 const ConWrap = styled.ul`
   display: flex;
   justify-content: space-between;
-  margin: 30px 0;
+  margin: 20px 0;
   li {
-    width: 46%;
-    height: 150px;
+    width: 47%;
+    height: 170px;
     padding: 15px;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.5);
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
   }
 `;
 const Text = styled.div`
   display: flex;
   justify-content: space-between;
+  color: rgba(27, 27, 27, 0.5);
 `;
-const SubText = styled.div``;
+const SubText = styled.div`
+  color: rgba(27, 27, 27, 0.5);
+`;
 const TempIcon = styled.div``;
-const TempRes = styled.div``;
+const Res = styled.h3`
+  font-size: 30px;
+  color: ${mainColors.blackColor};
+`;
 const HumIcon = styled.div``;
-const HumRes = styled.div``;
-
 const SubScreen = styled.div``;
 
 export const Home = () => {
@@ -123,7 +131,6 @@ export const Home = () => {
       setWeatherData(data);
       setDayData(`${dayResult}요일`);
       setTimeData(`${hours}:00`);
-
       setIsloading(false);
       console.log(data);
     })();
@@ -136,7 +143,7 @@ export const Home = () => {
 
   return (
     <>
-      {isloading ? (
+      {!isloading ? (
         <Loading />
       ) : (
         <Wrap>
@@ -151,7 +158,9 @@ export const Home = () => {
               <TopWrap>
                 <WeatherIcon>{icon}</WeatherIcon>
                 <Location>부산광역시</Location>
-                <CurrentTemp>{weatherData?.main?.temp}º</CurrentTemp>
+                <CurrentTemp>
+                  {Math.round(weatherData?.main?.temp)}º
+                </CurrentTemp>
                 <TimeWrap>
                   <Day>{dayData},</Day>
                   <Hour>{timeData}</Hour>
@@ -165,10 +174,10 @@ export const Home = () => {
                       <FontAwesomeIcon icon={faTemperatureHigh} />
                     </TempIcon>
                   </Text>
-                  <TempRes>{tempCalc}</TempRes>
+                  <Res>{Math.round(tempCalc)}º</Res>
                   <SubText>
-                    <p>최고{tempMax}</p>
-                    <p>최저{tempMin}</p>
+                    <p>최고 : {Math.round(tempMax)}º</p>
+                    <p>최저 : {Math.round(tempMin)}º</p>
                   </SubText>
                 </li>
                 <li>
@@ -178,11 +187,14 @@ export const Home = () => {
                       <FontAwesomeIcon icon={faDroplet} />
                     </HumIcon>
                   </Text>
-                  <HumRes></HumRes>
+                  <Res>{weatherData?.main?.humidity}%</Res>
                   <SubText>
                     <p>현재 이슬점은 12º입니다.</p>
                   </SubText>
                 </li>
+              </ConWrap>
+              <ConWrap>
+                <li></li>
               </ConWrap>
             </MainScreen>
 

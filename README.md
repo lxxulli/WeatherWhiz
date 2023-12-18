@@ -58,3 +58,5 @@
   - npm i --save @fortawesome/free-brands-svg-icons
 - [x] style-reset
   - npm i styled-reset
+- [x] spinner
+  - npm i react-spinners
