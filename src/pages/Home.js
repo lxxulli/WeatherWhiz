@@ -1,13 +1,20 @@
 import {
+  faCloud,
+  faCloudRain,
   faDroplet,
+  faEye,
   faMagnifyingGlass,
   faMoon,
+  faSmog,
+  faSun,
   faTemperatureHigh,
+  faWater,
+  faWind,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { weatherApi, forecastData } from "../api";
+import { weatherApi, forecastData, AirData } from "../api";
 import { Loading } from "../components/Loading";
 import { mainColors } from "../style/GlobalStyle";
 import {
@@ -15,6 +22,7 @@ import {
   faCalendarDays,
   faClock,
 } from "@fortawesome/free-regular-svg-icons";
+import { faCloudscale } from "@fortawesome/free-brands-svg-icons";
 
 const Wrap = styled.div`
   height: 100vh;
@@ -44,13 +52,16 @@ const MainScreen = styled.div`
   background-color: rgba(255, 255, 255, 0.4);
   padding: 30px;
   border-radius: 50px 0 0 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 const Form = styled.form`
-  height: 50px;
+  height: 60px;
   display: flex;
   align-items: center;
   background-color: rgba(255, 255, 255, 0.7);
-  border-radius: 30px;
+  border-radius: 50px;
   font-size: 25px;
   box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.05);
 `;
@@ -72,7 +83,6 @@ const MainTxtWrap = styled.div`
   margin-bottom: 30px;
 `;
 const WeatherIcon = styled.div`
-  margin: 20px 0;
   img {
     width: 240px;
   }
@@ -178,43 +188,62 @@ const Title = styled.div`
 const BoxWrap = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 30px 0;
+  margin: 30px 0 50px;
 `;
 const Box = styled.div`
   width: 19%;
   height: 250px;
   border-radius: 15px;
-  background-color: rgba(255, 255, 255, 0.7);
-  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 30px 15px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-direction: column;
 `;
 
 const Bottom = styled.div``;
-const TodayWrap = styled.div``;
+const TodayWrap = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-top: 30px;
+  font-size: 18px;
+  li {
+    height: 205px;
+    background-color: rgba(255, 255, 255, 0.6);
+    padding: 15px;
+  }
+`;
 
 export const Home = () => {
   const [weatherData, setWeatherData] = useState();
   const [isloading, setIsloading] = useState(true);
   const [dayData, setDayData] = useState();
   const [timeData, setTimeData] = useState();
+  const [dateData, setDateData] = useState();
   const [fcData, setFcData] = useState();
+  const [airData, setAirData] = useState();
 
   const now = new Date();
-  const day = String(now.getDay());
+  const day = now.getDay();
   const week = ["일", "월", "화", "수", "목", "금", "토"];
   const dayResult = week[day];
-  const hours = String(now.getHours());
+  const hours = now.getHours();
+  const date = now.getDate();
+
   useEffect(() => {
     (async () => {
       const data = await weatherApi();
+      // const res = await forecastData();
+      const air = await AirData();
+      console.log(air);
+
       setWeatherData(data);
       setDayData(`${dayResult}요일`);
       setTimeData(`${hours}:00`);
-      const res = await forecastData();
-      console.log(res);
+      setDateData(`${date}`);
+      setAirData(`${air}`);
 
       setIsloading(false);
     })();
@@ -224,6 +253,8 @@ export const Home = () => {
   const tempMax = weatherData?.main?.temp_max;
   const tempMin = weatherData?.main?.temp_min;
   const tempCalc = tempMax - tempMin;
+  // const airAqi = airData?.list[0]?.main?.aqi;
+  // console.log(airAqi);
 
   return (
     <>
@@ -246,7 +277,7 @@ export const Home = () => {
                     alt=""
                   />
                 </WeatherIcon>
-                <Location>부산광역시</Location>
+                <Location>{weatherData?.name}</Location>
                 <CurrentTemp>
                   {Math.round(weatherData?.main?.temp)}º
                 </CurrentTemp>
@@ -309,31 +340,31 @@ export const Home = () => {
                   </Title>
                   <BoxWrap>
                     <Box>
-                      <li>day</li>
+                      <li>{dateData}</li>
                       <li>이미지</li>
                       <li>최고</li>
                       <li>최저</li>
                     </Box>
                     <Box>
-                      <li>day</li>
+                      <li>{dateData}</li>
                       <li>이미지</li>
                       <li>최고</li>
                       <li>최저</li>
                     </Box>
                     <Box>
-                      <li>day</li>
+                      <li>{dateData}</li>
                       <li>이미지</li>
                       <li>최고</li>
                       <li>최저</li>
                     </Box>
                     <Box>
-                      <li>day</li>
+                      <li>{dateData}</li>
                       <li>이미지</li>
                       <li>최고</li>
                       <li>최저</li>
                     </Box>
                     <Box>
-                      <li>day</li>
+                      <li>{dateData}</li>
                       <li>이미지</li>
                       <li>최고</li>
                       <li>최저</li>
@@ -344,16 +375,105 @@ export const Home = () => {
               <Bottom>
                 <Title>
                   <FontAwesomeIcon icon={faCalendarCheck} />
-                  <h4>오늘의 날씨 정보</h4>
+                  <h4>오늘의 날씨</h4>
                 </Title>
                 <TodayWrap>
-                  <li>강수량</li>
-                  <li>기압</li>
-                  <li>가시성</li>
-                  <li>바람</li>
-                  <li>흐림</li>
-                  <li>일출</li>
-                  <li>대기오염</li>
+                  <li>
+                    <Text>
+                      <h4>강수량</h4>
+                      <TempIcon>
+                        <FontAwesomeIcon icon={faCloudRain} />
+                      </TempIcon>
+                    </Text>
+                    <Res>{weatherData?.rain}</Res>
+                    <SubText>
+                      <p></p>
+                    </SubText>
+                  </li>
+                  <li>
+                    <Text>
+                      <h4>기압</h4>
+                      <TempIcon>
+                        <FontAwesomeIcon icon={faCloudscale} />
+                      </TempIcon>
+                    </Text>
+                    <Res>{weatherData?.main?.pressure}hPa</Res>
+                    <SubText>
+                      <p></p>
+                    </SubText>
+                  </li>
+                  <li>
+                    <Text>
+                      <h4>가시성</h4>
+                      <TempIcon>
+                        <FontAwesomeIcon icon={faEye} />
+                      </TempIcon>
+                    </Text>
+                    <Res>{weatherData?.visibility}</Res>
+                    <SubText>
+                      <p>가시성 최대값은 10km 입니다.</p>
+                    </SubText>
+                  </li>
+                  <li>
+                    <Text>
+                      <h4>바람</h4>
+                      <TempIcon>
+                        <FontAwesomeIcon icon={faWind} />
+                      </TempIcon>
+                    </Text>
+                    <Res>{weatherData?.wind?.speed}</Res>
+                    <SubText>
+                      <p>풍향 : {weatherData?.wind?.deg}</p>
+                    </SubText>
+                  </li>
+                  <li>
+                    <Text>
+                      <h4>흐림</h4>
+                      <TempIcon>
+                        <FontAwesomeIcon icon={faCloud} />
+                      </TempIcon>
+                    </Text>
+                    <Res>{weatherData?.clouds?.all}%</Res>
+                    <SubText>
+                      <p></p>
+                    </SubText>
+                  </li>
+                  <li>
+                    <Text>
+                      <h4>일출</h4>
+                      <TempIcon>
+                        <FontAwesomeIcon icon={faSun} />
+                      </TempIcon>
+                    </Text>
+                    <Res>{weatherData?.sys?.sunrise}</Res>
+                    <SubText>
+                      <p></p>
+                    </SubText>
+                  </li>
+                  <li>
+                    <Text>
+                      <h4>대기오염</h4>
+                      <TempIcon>
+                        <FontAwesomeIcon icon={faSmog} />
+                      </TempIcon>
+                    </Text>
+                    <Res>{airData}</Res>
+                    <SubText>
+                      <p></p>
+                    </SubText>
+                  </li>
+                  <li>
+                    <Text>
+                      <h4>해수면</h4>
+                      <TempIcon>
+                        <FontAwesomeIcon icon={faWater} />
+                      </TempIcon>
+                    </Text>
+                    <Res>hPa</Res>
+                    <SubText>
+                      <p></p>
+                    </SubText>
+                  </li>
                 </TodayWrap>
               </Bottom>
             </SubScreen>

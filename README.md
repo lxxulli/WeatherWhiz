@@ -60,3 +60,5 @@
   - npm i styled-reset
 - [x] spinner
   - npm i react-spinners
+- [x]Chart
+  - npm install chart.js
